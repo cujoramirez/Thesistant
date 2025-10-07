@@ -1,5 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import { Box } from '@mui/material';
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import Navbar from './components/Navbar';
 import LandingPage from './pages/LandingPage';
 import About from './pages/About';
@@ -16,6 +18,8 @@ function App() {
         <Route path="/team" element={<Team />} />
         <Route path="/pricing" element={<Pricing />} />
       </Routes>
+      <Analytics />
+      <SpeedInsights />
     </Box>
   );
 }
