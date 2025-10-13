@@ -39,8 +39,9 @@ const Footer = () => {
       sx={{
         bgcolor: '#0a4168',
         color: 'white',
-        pt: 8,
-        pb: 4,
+        pt: { xs: 6, sm: 7, md: 8 },
+        pb: { xs: 3, md: 4 },
+        px: { xs: 2, sm: 3 },
         position: 'relative',
         overflow: 'hidden',
       }}
@@ -55,11 +56,12 @@ const Footer = () => {
           height: 300,
           borderRadius: '50%',
           background: 'radial-gradient(circle, rgba(107, 211, 254, 0.1) 0%, transparent 70%)',
+          display: { xs: 'none', sm: 'block' }
         }}
       />
 
       <Container maxWidth="lg" sx={{ position: 'relative' }}>
-        <Grid container spacing={4}>
+        <Grid container spacing={{ xs: 4, sm: 4, md: 4 }}>
           {/* Brand Section */}
           <Grid item xs={12} md={4}>
             <motion.div
@@ -68,31 +70,89 @@ const Footer = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <Box sx={{ mb: 3 }}>
-                <img src="/thesistant-logo.png" alt="Thesistant Logo" style={{ height: 200 }} />
+              <Box sx={{ 
+                mb: { xs: 2, md: 3 },
+                display: 'flex',
+                justifyContent: { xs: 'center', md: 'flex-start' }
+              }}>
+                <img 
+                  src="/thesistant-logo.png" 
+                  alt="Thesistant Logo" 
+                  style={{ 
+                    height: '160px'
+                  }} 
+                />
               </Box>
               
-              <Typography variant="body2" sx={{ mb: 3, color: 'rgba(255, 255, 255, 0.8)', lineHeight: 1.7 }}>
+              <Typography 
+                variant="body2" 
+                sx={{ 
+                  mb: 3, 
+                  color: 'rgba(255, 255, 255, 0.8)', 
+                  lineHeight: 1.7,
+                  fontSize: { xs: '0.875rem', sm: '0.875rem' },
+                  textAlign: { xs: 'center', md: 'left' },
+                  px: { xs: 1, md: 0 }
+                }}
+              >
                 Your trusted partner in academic excellence. We guide students through their thesis and research journey with expert consulting and personalized support.
               </Typography>
 
               {/* Contact Info */}
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <Box sx={{ 
+                display: 'flex', 
+                flexDirection: 'column', 
+                gap: { xs: 1.5, md: 1.5 },
+                alignItems: { xs: 'center', md: 'flex-start' }
+              }}>
+                <Box sx={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: 1,
+                  minHeight: 36
+                }}>
                   <Mail size={18} style={{ color: '#6bd3fe' }} />
-                  <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.8)' }}>
+                  <Typography 
+                    variant="body2" 
+                    sx={{ 
+                      color: 'rgba(255, 255, 255, 0.8)',
+                      fontSize: { xs: '0.875rem', sm: '0.875rem' }
+                    }}
+                  >
                     contact@thesistant.com
                   </Typography>
                 </Box>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <Box sx={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: 1,
+                  minHeight: 36
+                }}>
                   <Phone size={18} style={{ color: '#6bd3fe' }} />
-                  <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.8)' }}>
+                  <Typography 
+                    variant="body2" 
+                    sx={{ 
+                      color: 'rgba(255, 255, 255, 0.8)',
+                      fontSize: { xs: '0.875rem', sm: '0.875rem' }
+                    }}
+                  >
                     +1 (555) 123-4567
                   </Typography>
                 </Box>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <Box sx={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: 1,
+                  minHeight: 36
+                }}>
                   <MapPin size={18} style={{ color: '#6bd3fe' }} />
-                  <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.8)' }}>
+                  <Typography 
+                    variant="body2" 
+                    sx={{ 
+                      color: 'rgba(255, 255, 255, 0.8)',
+                      fontSize: { xs: '0.875rem', sm: '0.875rem' }
+                    }}
+                  >
                     123 Academic St, Research City
                   </Typography>
                 </Box>
@@ -108,14 +168,30 @@ const Footer = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
             >
-              <Typography variant="h6" sx={{ fontWeight: 700, mb: 2, color: '#6bd3fe' }}>
+              <Typography 
+                variant="h6" 
+                sx={{ 
+                  fontWeight: 700, 
+                  mb: { xs: 2, md: 2 }, 
+                  color: '#6bd3fe',
+                  fontSize: { xs: '1rem', sm: '1.15rem', md: '1.25rem' },
+                  textAlign: { xs: 'center', sm: 'left' }
+                }}
+              >
                 Services
               </Typography>
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+              <Box sx={{ 
+                display: 'flex', 
+                flexDirection: 'column', 
+                gap: 1.5,
+                alignItems: { xs: 'center', sm: 'flex-start' }
+              }}>
                 {footerLinks.services.map((link, index) => (
                   <Typography
                     key={index}
                     variant="body2"
+                    component={motion.div}
+                    whileTap={{ scale: 0.98 }}
                     onClick={() => {
                       if (link.path.startsWith('#')) {
                         if (window.location.pathname === '/') {
@@ -129,6 +205,10 @@ const Footer = () => {
                       color: 'rgba(255, 255, 255, 0.8)',
                       cursor: 'pointer',
                       transition: 'all 0.3s',
+                      minHeight: 36,
+                      display: 'flex',
+                      alignItems: 'center',
+                      fontSize: { xs: '0.875rem', sm: '0.875rem' },
                       '&:hover': {
                         color: '#6bd3fe',
                         paddingLeft: 1,
@@ -150,14 +230,30 @@ const Footer = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <Typography variant="h6" sx={{ fontWeight: 700, mb: 2, color: '#6bd3fe' }}>
+              <Typography 
+                variant="h6" 
+                sx={{ 
+                  fontWeight: 700, 
+                  mb: { xs: 2, md: 2 }, 
+                  color: '#6bd3fe',
+                  fontSize: { xs: '1rem', sm: '1.15rem', md: '1.25rem' },
+                  textAlign: { xs: 'center', sm: 'left' }
+                }}
+              >
                 Company
               </Typography>
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+              <Box sx={{ 
+                display: 'flex', 
+                flexDirection: 'column', 
+                gap: 1.5,
+                alignItems: { xs: 'center', sm: 'flex-start' }
+              }}>
                 {footerLinks.company.map((link, index) => (
                   <Typography
                     key={index}
                     variant="body2"
+                    component={motion.div}
+                    whileTap={{ scale: 0.98 }}
                     onClick={() => {
                       if (link.path.startsWith('#')) {
                         if (window.location.pathname === '/') {
@@ -173,6 +269,10 @@ const Footer = () => {
                       color: 'rgba(255, 255, 255, 0.8)',
                       cursor: 'pointer',
                       transition: 'all 0.3s',
+                      minHeight: 36,
+                      display: 'flex',
+                      alignItems: 'center',
+                      fontSize: { xs: '0.875rem', sm: '0.875rem' },
                       '&:hover': {
                         color: '#6bd3fe',
                         paddingLeft: 1,
@@ -194,19 +294,39 @@ const Footer = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.3 }}
             >
-              <Typography variant="h6" sx={{ fontWeight: 700, mb: 2, color: '#6bd3fe' }}>
+              <Typography 
+                variant="h6" 
+                sx={{ 
+                  fontWeight: 700, 
+                  mb: { xs: 2, md: 2 }, 
+                  color: '#6bd3fe',
+                  fontSize: { xs: '1rem', sm: '1.15rem', md: '1.25rem' },
+                  textAlign: { xs: 'center', sm: 'left' }
+                }}
+              >
                 Resources
               </Typography>
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+              <Box sx={{ 
+                display: 'flex', 
+                flexDirection: 'column', 
+                gap: 1.5,
+                alignItems: { xs: 'center', sm: 'flex-start' }
+              }}>
                 {footerLinks.resources.map((link, index) => (
                   <Typography
                     key={index}
                     variant="body2"
+                    component={motion.div}
+                    whileTap={link.path !== '#' ? { scale: 0.98 } : {}}
                     onClick={() => link.path !== '#' && (window.location.href = link.path)}
                     sx={{
                       color: 'rgba(255, 255, 255, 0.8)',
                       cursor: link.path !== '#' ? 'pointer' : 'default',
                       transition: 'all 0.3s',
+                      minHeight: 36,
+                      display: 'flex',
+                      alignItems: 'center',
+                      fontSize: { xs: '0.875rem', sm: '0.875rem' },
                       '&:hover': {
                         color: link.path !== '#' ? '#6bd3fe' : 'rgba(255, 255, 255, 0.8)',
                         paddingLeft: link.path !== '#' ? 1 : 0,
@@ -228,10 +348,24 @@ const Footer = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.4 }}
             >
-              <Typography variant="h6" sx={{ fontWeight: 700, mb: 2, color: '#6bd3fe' }}>
+              <Typography 
+                variant="h6" 
+                sx={{ 
+                  fontWeight: 700, 
+                  mb: { xs: 2, md: 2 }, 
+                  color: '#6bd3fe',
+                  fontSize: { xs: '1rem', sm: '1.15rem', md: '1.25rem' },
+                  textAlign: { xs: 'center', sm: 'left' }
+                }}
+              >
                 Follow Us
               </Typography>
-              <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+              <Box sx={{ 
+                display: 'flex', 
+                gap: { xs: 1.5, sm: 1 }, 
+                flexWrap: 'wrap',
+                justifyContent: { xs: 'center', sm: 'flex-start' }
+              }}>
                 {socialLinks.map((social, index) => (
                   <motion.div
                     key={index}
@@ -244,6 +378,10 @@ const Footer = () => {
                       sx={{
                         bgcolor: 'rgba(107, 211, 254, 0.1)',
                         color: '#6bd3fe',
+                        width: { xs: 48, sm: 44 },
+                        height: { xs: 48, sm: 44 },
+                        minWidth: 44,
+                        minHeight: 44,
                         '&:hover': {
                           bgcolor: '#6bd3fe',
                           color: '#0a4168',
@@ -263,24 +401,41 @@ const Footer = () => {
         <Box
           sx={{
             borderTop: '1px solid rgba(107, 211, 254, 0.2)',
-            mt: 6,
-            pt: 4,
+            mt: { xs: 5, md: 6 },
+            pt: { xs: 3, md: 4 },
             display: 'flex',
             flexDirection: { xs: 'column', sm: 'row' },
             justifyContent: 'space-between',
             alignItems: 'center',
-            gap: 2,
+            gap: { xs: 2, sm: 2 },
           }}
         >
-          <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.6)' }}>
+          <Typography 
+            variant="body2" 
+            sx={{ 
+              color: 'rgba(255, 255, 255, 0.6)',
+              fontSize: { xs: '0.813rem', sm: '0.875rem' },
+              textAlign: 'center'
+            }}
+          >
             © {currentYear} Thesistant. All rights reserved.
           </Typography>
-          <Box sx={{ display: 'flex', gap: 3 }}>
+          <Box sx={{ 
+            display: 'flex', 
+            gap: { xs: 2, sm: 3 },
+            flexDirection: { xs: 'row', sm: 'row' }
+          }}>
             <Typography
               variant="body2"
+              component={motion.div}
+              whileTap={{ scale: 0.98 }}
               sx={{
                 color: 'rgba(255, 255, 255, 0.6)',
                 cursor: 'pointer',
+                fontSize: { xs: '0.813rem', sm: '0.875rem' },
+                minHeight: 36,
+                display: 'flex',
+                alignItems: 'center',
                 '&:hover': { color: '#6bd3fe' },
               }}
             >
@@ -288,9 +443,15 @@ const Footer = () => {
             </Typography>
             <Typography
               variant="body2"
+              component={motion.div}
+              whileTap={{ scale: 0.98 }}
               sx={{
                 color: 'rgba(255, 255, 255, 0.6)',
                 cursor: 'pointer',
+                fontSize: { xs: '0.813rem', sm: '0.875rem' },
+                minHeight: 36,
+                display: 'flex',
+                alignItems: 'center',
                 '&:hover': { color: '#6bd3fe' },
               }}
             >

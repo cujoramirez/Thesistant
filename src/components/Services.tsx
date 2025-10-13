@@ -78,7 +78,8 @@ const Services = () => {
       id="services"
       ref={ref}
       sx={{
-        py: { xs: 8, md: 12 },
+        py: { xs: 6, sm: 8, md: 12 },
+        px: { xs: 2, sm: 3 },
         bgcolor: 'white',
         position: 'relative',
         overflow: 'hidden',
@@ -152,29 +153,46 @@ const Services = () => {
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
         >
-          <Grid container spacing={4}>
+          <Grid container spacing={{ xs: 3, sm: 3.5, md: 4 }}>
             {services.map((service, index) => (
               <Grid item xs={12} md={6} key={index}>
                 <motion.div
                   variants={cardVariants}
-                  whileHover={{ y: -10 }}
-                  transition={{ duration: 0.3 }}
+                  whileHover={{ y: -12, scale: 1.02 }}
+                  whileTap={{ scale: 0.97 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
                 >
                   <Card
                     sx={{
                       height: '100%',
-                      borderRadius: 4,
+                      borderRadius: { xs: 3, md: 4 },
                       boxShadow: '0 4px 20px rgba(16, 162, 224, 0.08)',
                       border: '1px solid rgba(16, 162, 224, 0.1)',
-                      transition: 'all 0.3s ease',
+                      transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
                       overflow: 'hidden',
                       position: 'relative',
+                      cursor: 'pointer',
+                      background: 'linear-gradient(135deg, #ffffff 0%, #f9feff 100%)',
+                      '&::before': {
+                        content: '""',
+                        position: 'absolute',
+                        top: 0,
+                        left: '-100%',
+                        width: '100%',
+                        height: '100%',
+                        background: `linear-gradient(90deg, transparent, ${service.color}08, transparent)`,
+                        transition: 'left 0.6s ease',
+                      },
                       '&:hover': {
-                        boxShadow: '0 12px 40px rgba(16, 162, 224, 0.15)',
+                        boxShadow: `0 16px 48px ${service.color}30`,
                         borderColor: service.color,
+                        transform: 'translateY(-12px)',
                         '& .service-icon-bg': {
-                          transform: 'scale(1.1)',
-                          opacity: 0.15,
+                          transform: 'scale(1.15) rotate(10deg)',
+                          opacity: 0.12,
+                        },
+                        '&::before': {
+                          left: '100%',
                         },
                       },
                     }}
@@ -187,7 +205,7 @@ const Services = () => {
                       }}
                     />
 
-                    <CardContent sx={{ p: 4, position: 'relative' }}>
+                    <CardContent sx={{ p: { xs: 3, sm: 3.5, md: 4 }, position: 'relative' }}>
                       {/* Background icon */}
                       <Box
                         className="service-icon-bg"
@@ -197,6 +215,7 @@ const Services = () => {
                           right: 20,
                           opacity: 0.05,
                           transition: 'all 0.3s ease',
+                          display: { xs: 'none', sm: 'block' }
                         }}
                       >
                         <service.icon size={120} />
@@ -205,18 +224,20 @@ const Services = () => {
                       {/* Icon */}
                       <motion.div
                         whileHover={{ rotate: [0, -10, 10, -10, 0] }}
+                        whileTap={{ scale: 0.95 }}
                         transition={{ duration: 0.5 }}
                       >
                         <Box
                           sx={{
-                            width: 70,
-                            height: 70,
-                            borderRadius: 3,
+                            width: { xs: 60, sm: 65, md: 70 },
+                            height: { xs: 60, sm: 65, md: 70 },
+                            minHeight: 60,
+                            borderRadius: { xs: 2.5, md: 3 },
                             background: service.gradient,
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            mb: 3,
+                            mb: { xs: 2.5, md: 3 },
                             boxShadow: `0 8px 24px ${service.color}40`,
                           }}
                         >
@@ -227,9 +248,10 @@ const Services = () => {
                       <Typography
                         variant="h5"
                         sx={{
+                          fontSize: { xs: '1.25rem', sm: '1.35rem', md: '1.5rem' },
                           fontWeight: 700,
                           color: '#0a4168',
-                          mb: 2,
+                          mb: { xs: 1.5, md: 2 },
                         }}
                       >
                         {service.title}
@@ -238,8 +260,9 @@ const Services = () => {
                       <Typography
                         variant="body1"
                         sx={{
+                          fontSize: { xs: '0.95rem', sm: '1rem' },
                           color: '#64748b',
-                          mb: 3,
+                          mb: { xs: 2.5, md: 3 },
                           lineHeight: 1.7,
                         }}
                       >
@@ -247,7 +270,7 @@ const Services = () => {
                       </Typography>
 
                       {/* Features */}
-                      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1.5 }}>
+                      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: { xs: 1.25, sm: 1.5 } }}>
                         {service.features.map((feature, idx) => (
                           <motion.div
                             key={idx}
@@ -262,11 +285,17 @@ const Services = () => {
                                 gap: 0.75,
                                 bgcolor: `${service.color}10`,
                                 color: service.color,
-                                px: 2,
-                                py: 0.75,
+                                px: { xs: 1.75, sm: 2 },
+                                py: { xs: 0.85, sm: 0.75 },
+                                minHeight: 36,
                                 borderRadius: 2,
-                                fontSize: '0.85rem',
+                                fontSize: { xs: '0.8rem', sm: '0.85rem' },
                                 fontWeight: 600,
+                                cursor: 'pointer',
+                                transition: 'all 0.2s ease',
+                                '&:active': {
+                                  transform: 'scale(0.95)',
+                                }
                               }}
                             >
                               <CheckCircle size={14} />
@@ -289,20 +318,20 @@ const Services = () => {
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
           transition={{ duration: 0.6, delay: 0.8 }}
         >
-          <Box sx={{ mt: 12, textAlign: 'center' }}>
+          <Box sx={{ mt: { xs: 8, sm: 10, md: 12 }, textAlign: 'center' }}>
             <Typography
               variant="h3"
               sx={{
-                fontSize: { xs: '1.75rem', md: '2.25rem' },
+                fontSize: { xs: '1.5rem', sm: '1.75rem', md: '2.25rem' },
                 fontWeight: 700,
                 color: '#0a4168',
-                mb: 6,
+                mb: { xs: 4, sm: 5, md: 6 },
               }}
             >
               Why Choose Thesistant?
             </Typography>
 
-            <Grid container spacing={4}>
+            <Grid container spacing={{ xs: 3, sm: 3.5, md: 4 }}>
               {[
                 {
                   icon: Users,
@@ -320,25 +349,41 @@ const Services = () => {
                   description: "98% success rate with students completing their thesis on time"
                 },
               ].map((item, index) => (
-                <Grid item xs={12} md={4} key={index}>
+                <Grid item xs={12} sm={6} md={4} key={index}>
                   <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
                     transition={{ delay: 1 + index * 0.2 }}
                     whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.98 }}
                   >
-                    <Box sx={{ textAlign: 'center' }}>
+                    <Box 
+                      sx={{ 
+                        textAlign: 'center',
+                        p: { xs: 2.5, sm: 3 },
+                        borderRadius: 3,
+                        transition: 'all 0.3s ease',
+                        cursor: 'pointer',
+                        '&:hover': {
+                          bgcolor: 'rgba(16, 162, 224, 0.02)',
+                        },
+                        '&:active': {
+                          transform: 'scale(0.98)',
+                        }
+                      }}
+                    >
                       <Box
                         sx={{
-                          width: 80,
-                          height: 80,
+                          width: { xs: 72, sm: 76, md: 80 },
+                          height: { xs: 72, sm: 76, md: 80 },
+                          minHeight: 72,
                           borderRadius: '50%',
                           bgcolor: 'rgba(16, 162, 224, 0.1)',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
                           mx: 'auto',
-                          mb: 2,
+                          mb: { xs: 2, md: 2 },
                         }}
                       >
                         <item.icon size={36} style={{ color: '#10a2e0' }} />
@@ -346,6 +391,7 @@ const Services = () => {
                       <Typography
                         variant="h6"
                         sx={{
+                          fontSize: { xs: '1.1rem', sm: '1.15rem', md: '1.25rem' },
                           fontWeight: 700,
                           color: '#0a4168',
                           mb: 1,
@@ -356,6 +402,7 @@ const Services = () => {
                       <Typography
                         variant="body2"
                         sx={{
+                          fontSize: { xs: '0.9rem', sm: '0.95rem' },
                           color: '#64748b',
                           lineHeight: 1.6,
                         }}

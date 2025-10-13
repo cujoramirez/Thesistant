@@ -3,6 +3,7 @@ import { Box } from '@mui/material';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import Navbar from './components/Navbar';
+import ScrollToTop from './components/ScrollToTop';
 import LandingPage from './pages/LandingPage';
 import About from './pages/About';
 import Team from './pages/Team';
@@ -11,6 +12,7 @@ import Pricing from './pages/Pricing';
 function App() {
   return (
     <Box>
+      <ScrollToTop />
       <Navbar />
       <Routes>
         <Route path="/" element={<LandingPage />} />

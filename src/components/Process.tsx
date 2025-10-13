@@ -1,6 +1,7 @@
 import { Box, Container, Typography } from '@mui/material';
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { 
   MessageCircle, 
   Target, 
@@ -12,8 +13,13 @@ import {
 } from 'lucide-react';
 
 const Process = () => {
+  const navigate = useNavigate();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
+
+  const handleScheduleConsultation = () => {
+    navigate('/pricing');
+  };
 
   const steps = [
     {
@@ -59,7 +65,8 @@ const Process = () => {
       id="process"
       ref={ref}
       sx={{
-        py: { xs: 8, md: 12 },
+        py: { xs: 6, sm: 8, md: 12 },
+        px: { xs: 2, sm: 3 },
         background: 'linear-gradient(180deg, #ffffff 0%, #f8fafc 100%)',
         position: 'relative',
         overflow: 'hidden',
@@ -85,15 +92,15 @@ const Process = () => {
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.6 }}
         >
-          <Box sx={{ textAlign: 'center', mb: 10 }}>
+          <Box sx={{ textAlign: 'center', mb: { xs: 6, sm: 8, md: 10 } }}>
             <Typography
               variant="overline"
               sx={{
                 color: '#10a2e0',
-                fontSize: '1rem',
+                fontSize: { xs: '0.9rem', sm: '0.95rem', md: '1rem' },
                 fontWeight: 600,
                 letterSpacing: 2,
-                mb: 2,
+                mb: { xs: 1.5, md: 2 },
                 display: 'block',
               }}
             >
@@ -103,10 +110,10 @@ const Process = () => {
             <Typography
               variant="h2"
               sx={{
-                fontSize: { xs: '2rem', md: '2.75rem' },
+                fontSize: { xs: '1.75rem', sm: '2rem', md: '2.75rem' },
                 fontWeight: 700,
                 color: '#0a4168',
-                mb: 2,
+                mb: { xs: 1.5, md: 2 },
               }}
             >
               Your Journey to Success
@@ -115,11 +122,13 @@ const Process = () => {
             <Typography
               variant="h6"
               sx={{
+                fontSize: { xs: '1rem', sm: '1.1rem', md: '1.25rem' },
                 color: '#64748b',
                 maxWidth: 700,
                 mx: 'auto',
                 lineHeight: 1.7,
                 fontWeight: 400,
+                px: { xs: 2, sm: 0 }
               }}
             >
               A structured, proven process that guides you from initial concept to successful defense
@@ -134,11 +143,12 @@ const Process = () => {
             sx={{
               display: { xs: 'block', md: 'none' },
               position: 'absolute',
-              left: 35,
+              left: { xs: 28, sm: 32 },
               top: 80,
               bottom: 80,
-              width: 2,
-              bgcolor: 'rgba(16, 162, 224, 0.2)',
+              width: 3,
+              background: 'linear-gradient(180deg, rgba(16, 162, 224, 0.3) 0%, rgba(16, 162, 224, 0.1) 100%)',
+              borderRadius: 2,
             }}
           />
 
@@ -162,24 +172,59 @@ const Process = () => {
                 <Box
                   sx={{
                     flex: { xs: 1, md: '0 0 45%' },
-                    ml: { xs: 3, md: 0 },
+                    ml: { xs: '80px', sm: '90px', md: 0 },
                   }}
                 >
                   <motion.div
-                    whileHover={{ scale: 1.02, y: -5 }}
-                    transition={{ duration: 0.3 }}
+                    whileHover={{ scale: 1.03, y: -8 }}
+                    whileTap={{ scale: 0.97 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
                   >
                     <Box
                       sx={{
                         bgcolor: 'white',
-                        borderRadius: 4,
-                        p: 4,
+                        borderRadius: { xs: 3, md: 4 },
+                        p: { xs: 3, sm: 3.5, md: 4 },
+                        position: 'relative',
+                        overflow: 'hidden',
                         boxShadow: '0 4px 20px rgba(16, 162, 224, 0.08)',
                         border: '1px solid rgba(16, 162, 224, 0.1)',
-                        transition: 'all 0.3s ease',
+                        transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                        cursor: 'pointer',
+                        '&::before': {
+                          content: '""',
+                          position: 'absolute',
+                          top: 0,
+                          left: index % 2 === 0 ? '-100%' : 'auto',
+                          right: index % 2 === 0 ? 'auto' : '-100%',
+                          width: '100%',
+                          height: '100%',
+                          background: 'linear-gradient(90deg, transparent, rgba(107, 211, 254, 0.08), transparent)',
+                          transition: 'left 0.6s ease, right 0.6s ease',
+                        },
+                        '&::after': {
+                          content: '""',
+                          position: 'absolute',
+                          top: 0,
+                          left: 0,
+                          right: 0,
+                          height: '4px',
+                          background: 'linear-gradient(90deg, #10a2e0 0%, #6bd3fe 100%)',
+                          transform: 'scaleX(0)',
+                          transformOrigin: index % 2 === 0 ? 'left' : 'right',
+                          transition: 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+                        },
                         '&:hover': {
-                          boxShadow: '0 8px 30px rgba(16, 162, 224, 0.15)',
+                          boxShadow: '0 12px 48px rgba(16, 162, 224, 0.2)',
                           borderColor: '#10a2e0',
+                          bgcolor: 'rgba(240, 249, 255, 0.5)',
+                          '&::before': {
+                            left: index % 2 === 0 ? '100%' : 'auto',
+                            right: index % 2 === 0 ? 'auto' : '100%',
+                          },
+                          '&::after': {
+                            transform: 'scaleX(1)',
+                          },
                         },
                       }}
                     >
@@ -189,14 +234,15 @@ const Process = () => {
                           display: 'inline-flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          width: 32,
-                          height: 32,
+                          width: { xs: 36, sm: 38, md: 40 },
+                          height: { xs: 36, sm: 38, md: 40 },
+                          minHeight: 36,
                           borderRadius: '50%',
                           bgcolor: 'rgba(16, 162, 224, 0.1)',
                           color: '#10a2e0',
                           fontWeight: 700,
-                          fontSize: '0.9rem',
-                          mb: 2,
+                          fontSize: { xs: '0.95rem', md: '1rem' },
+                          mb: { xs: 2, md: 2 },
                         }}
                       >
                         {index + 1}
@@ -205,9 +251,10 @@ const Process = () => {
                       <Typography
                         variant="h5"
                         sx={{
+                          fontSize: { xs: '1.15rem', sm: '1.25rem', md: '1.5rem' },
                           fontWeight: 700,
                           color: '#0a4168',
-                          mb: 1.5,
+                          mb: { xs: 1.25, md: 1.5 },
                         }}
                       >
                         {step.title}
@@ -216,8 +263,9 @@ const Process = () => {
                       <Typography
                         variant="body1"
                         sx={{
+                          fontSize: { xs: '0.95rem', sm: '1rem' },
                           color: '#64748b',
-                          mb: 2.5,
+                          mb: { xs: 2, md: 2.5 },
                           lineHeight: 1.7,
                         }}
                       >
@@ -225,7 +273,7 @@ const Process = () => {
                       </Typography>
 
                       {/* Details */}
-                      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+                      <Box sx={{ display: 'flex', flexDirection: 'column', gap: { xs: 1.25, md: 1 } }}>
                         {step.details.map((detail, idx) => (
                           <Box
                             key={idx}
@@ -233,6 +281,7 @@ const Process = () => {
                               display: 'flex',
                               alignItems: 'center',
                               gap: 1,
+                              minHeight: 32,
                             }}
                           >
                             <CheckCircle size={16} style={{ color: '#10a2e0', flexShrink: 0 }} />
@@ -240,7 +289,8 @@ const Process = () => {
                               variant="body2"
                               sx={{
                                 color: '#64748b',
-                                fontSize: '0.9rem',
+                                fontSize: { xs: '0.875rem', sm: '0.9rem' },
+                                lineHeight: 1.5,
                               }}
                             >
                               {detail}
@@ -258,32 +308,65 @@ const Process = () => {
                     flex: { xs: '0 0 auto', md: '0 0 10%' },
                     display: 'flex',
                     justifyContent: 'center',
-                    alignItems: 'center',
+                    alignItems: 'flex-start',
                     position: { xs: 'absolute', md: 'relative' },
-                    left: { xs: 0, md: 'auto' },
+                    left: { xs: '8px', sm: '12px', md: 'auto' },
+                    top: { xs: '12px', md: 'auto' },
                     zIndex: 2,
                   }}
                 >
                   <motion.div
-                    initial={{ scale: 0 }}
-                    animate={isInView ? { scale: 1 } : { scale: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.15 + 0.2 }}
-                    whileHover={{ scale: 1.1 }}
+                    initial={{ scale: 0, rotate: -180 }}
+                    animate={isInView ? { scale: 1, rotate: 0 } : { scale: 0, rotate: -180 }}
+                    transition={{ 
+                      type: "spring", 
+                      stiffness: 260, 
+                      damping: 20,
+                      delay: index * 0.15 + 0.2 
+                    }}
+                    whileHover={{ 
+                      scale: 1.2, 
+                      rotate: [0, -10, 10, -10, 0],
+                      boxShadow: '0 12px 40px rgba(16, 162, 224, 0.5)'
+                    }}
+                    whileTap={{ scale: 0.9 }}
                   >
                     <Box
                       sx={{
-                        width: { xs: 70, md: 90 },
-                        height: { xs: 70, md: 90 },
+                        width: { xs: 56, sm: 64, md: 90 },
+                        height: { xs: 56, sm: 64, md: 90 },
+                        minWidth: 56,
+                        minHeight: 56,
                         borderRadius: '50%',
                         background: `linear-gradient(135deg, #10a2e0 0%, #6bd3fe 100%)`,
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        boxShadow: '0 8px 24px rgba(16, 162, 224, 0.3)',
-                        border: '4px solid white',
+                        position: 'relative',
+                        boxShadow: '0 8px 24px rgba(16, 162, 224, 0.3), inset 0 2px 8px rgba(255, 255, 255, 0.2)',
+                        border: { xs: '3px solid white', md: '4px solid white' },
+                        cursor: 'pointer',
+                        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                        '&::before': {
+                          content: '""',
+                          position: 'absolute',
+                          inset: -2,
+                          borderRadius: '50%',
+                          background: 'linear-gradient(135deg, #6bd3fe, #10a2e0)',
+                          opacity: 0,
+                          transition: 'opacity 0.3s ease',
+                          animation: 'pulse 2s infinite',
+                        },
+                        '&:hover::before': {
+                          opacity: 0.5,
+                        },
+                        '@keyframes pulse': {
+                          '0%, 100%': { transform: 'scale(1)', opacity: 0.5 },
+                          '50%': { transform: 'scale(1.1)', opacity: 0 },
+                        },
                       }}
                     >
-                      <step.icon size={index % 2 === 0 ? 36 : 40} style={{ color: 'white' }} />
+                      <step.icon size={index % 2 === 0 ? 28 : 32} style={{ color: 'white', zIndex: 1 }} />
                     </Box>
                   </motion.div>
                 </Box>
@@ -336,9 +419,9 @@ const Process = () => {
         >
           <Box
             sx={{
-              mt: 10,
-              p: { xs: 4, md: 6 },
-              borderRadius: 4,
+              mt: { xs: 8, sm: 9, md: 10 },
+              p: { xs: 3.5, sm: 4, md: 6 },
+              borderRadius: { xs: 3, md: 4 },
               background: 'linear-gradient(135deg, #10a2e0 0%, #0d608e 100%)',
               textAlign: 'center',
               position: 'relative',
@@ -355,6 +438,7 @@ const Process = () => {
                 height: 200,
                 borderRadius: '50%',
                 bgcolor: 'rgba(255, 255, 255, 0.1)',
+                display: { xs: 'none', sm: 'block' }
               }}
             />
             <Box
@@ -366,6 +450,7 @@ const Process = () => {
                 height: 150,
                 borderRadius: '50%',
                 bgcolor: 'rgba(255, 255, 255, 0.1)',
+                display: { xs: 'none', sm: 'block' }
               }}
             />
 
@@ -373,10 +458,11 @@ const Process = () => {
               <Typography
                 variant="h3"
                 sx={{
-                  fontSize: { xs: '1.75rem', md: '2.25rem' },
+                  fontSize: { xs: '1.5rem', sm: '1.75rem', md: '2.25rem' },
                   fontWeight: 700,
                   color: 'white',
-                  mb: 2,
+                  mb: { xs: 1.5, md: 2 },
+                  lineHeight: 1.3,
                 }}
               >
                 Ready to Start Your Journey?
@@ -385,32 +471,70 @@ const Process = () => {
               <Typography
                 variant="h6"
                 sx={{
+                  fontSize: { xs: '1rem', sm: '1.1rem', md: '1.25rem' },
                   color: 'rgba(255, 255, 255, 0.9)',
-                  mb: 4,
+                  mb: { xs: 3, md: 4 },
                   maxWidth: 600,
                   mx: 'auto',
+                  lineHeight: 1.6,
+                  px: { xs: 1, sm: 0 }
                 }}
               >
                 Let's turn your research goals into reality. Schedule a free consultation today!
               </Typography>
 
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+              <motion.div
+                whileHover={{ scale: 1.03, y: -4 }}
+                whileTap={{ scale: 0.97 }}
+                transition={{ type: "spring", stiffness: 400, damping: 17 }}
                 style={{
-                  background: 'white',
-                  color: '#10a2e0',
-                  border: 'none',
-                  padding: '16px 48px',
-                  fontSize: '1.1rem',
-                  fontWeight: 600,
-                  borderRadius: 12,
-                  cursor: 'pointer',
-                  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+                  display: 'inline-block',
+                  width: window.innerWidth < 600 ? '100%' : 'auto',
+                  maxWidth: window.innerWidth < 600 ? '320px' : 'none',
                 }}
               >
-                Schedule Free Consultation
-              </motion.button>
+                <button
+                  onClick={handleScheduleConsultation}
+                  style={{
+                    background: 'white',
+                    color: '#10a2e0',
+                    border: '2px solid rgba(16, 162, 224, 0.2)',
+                    padding: window.innerWidth < 600 ? '16px 32px' : '18px 48px',
+                    minHeight: window.innerWidth < 600 ? '56px' : 'auto',
+                    fontSize: window.innerWidth < 600 ? '1.05rem' : '1.1rem',
+                    fontWeight: 600,
+                    borderRadius: 12,
+                    cursor: 'pointer',
+                    position: 'relative',
+                    overflow: 'hidden',
+                    width: '100%',
+                    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.8)',
+                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 1)';
+                    e.currentTarget.style.borderColor = 'rgba(16, 162, 224, 0.4)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.8)';
+                    e.currentTarget.style.borderColor = 'rgba(16, 162, 224, 0.2)';
+                  }}
+                >
+                  <span style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+                    Schedule Free Consultation
+                    <ArrowRight size={20} />
+                  </span>
+                  <span style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: '-100%',
+                    width: '100%',
+                    height: '100%',
+                    background: 'linear-gradient(90deg, transparent, rgba(16, 162, 224, 0.1), transparent)',
+                    transition: 'left 0.6s ease',
+                  }} />
+                </button>
+              </motion.div>
             </Box>
           </Box>
         </motion.div>

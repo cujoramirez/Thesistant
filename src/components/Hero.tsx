@@ -1,11 +1,24 @@
 import { Box, Container, Typography, Button, Grid } from '@mui/material';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, Sparkles, BookOpen, Users, Award, TrendingUp } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const Hero = () => {
+  const navigate = useNavigate();
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 500], [0, 150]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0]);
+
+  const handleStartJourney = () => {
+    navigate('/pricing');
+  };
+
+  const handleLearnMore = () => {
+    const servicesSection = document.querySelector('#services');
+    if (servicesSection) {
+      servicesSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -82,14 +95,14 @@ const Hero = () => {
       />
 
       <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
-        <Box sx={{ pt: { xs: 8, md: 12 }, pb: { xs: 6, md: 10 } }}>
+        <Box sx={{ pt: { xs: 18, sm: 16, md: 18 }, pb: { xs: 6, sm: 8, md: 10 }, px: { xs: 2, sm: 3 } }}>
           <motion.div
             variants={containerVariants}
             initial="hidden"
             animate="visible"
             style={{ opacity }}
           >
-            <Grid container spacing={6} alignItems="center">
+            <Grid container spacing={{ xs: 4, sm: 5, md: 6 }} alignItems="center">
               {/* Left Content - Text & CTAs */}
               <Grid item xs={12} md={6}>
                 <motion.div variants={itemVariants}>
@@ -113,10 +126,10 @@ const Hero = () => {
                   <Typography
                     variant="h1"
                     sx={{
-                      fontSize: { xs: '2.5rem', md: '3.5rem', lg: '4rem' },
+                      fontSize: { xs: '2.25rem', sm: '2.75rem', md: '3.5rem', lg: '4rem' },
                       fontWeight: 800,
                       lineHeight: 1.2,
-                      mb: 3,
+                      mb: { xs: 2.5, md: 3 },
                       background: 'linear-gradient(135deg, #0a4168 0%, #10a2e0 50%, #0a4168 100%)',
                       WebkitBackgroundClip: 'text',
                       WebkitTextFillColor: 'transparent',
@@ -134,10 +147,11 @@ const Hero = () => {
                   <Typography
                     variant="h5"
                     sx={{
+                      fontSize: { xs: '1.05rem', sm: '1.15rem', md: '1.25rem' },
                       color: '#64748b',
                       fontWeight: 400,
                       lineHeight: 1.6,
-                      mb: 4,
+                      mb: { xs: 3, md: 4 },
                       maxWidth: 600,
                     }}
                   >
@@ -146,27 +160,58 @@ const Hero = () => {
                 </motion.div>
 
                 <motion.div variants={itemVariants}>
-                  <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+                  <Box sx={{ 
+                    display: 'flex', 
+                    gap: 2, 
+                    flexDirection: { xs: 'column', sm: 'row' },
+                    width: { xs: '100%', sm: 'auto' }
+                  }}>
                     <motion.div
-                      whileHover={{ scale: 1.05, boxShadow: '0 12px 30px rgba(16, 162, 224, 0.3)' }}
-                      whileTap={{ scale: 0.98 }}
+                      whileHover={{ scale: 1.03, y: -4 }}
+                      whileTap={{ scale: 0.97 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                      style={{ width: '100%' }}
                     >
                       <Button
                         variant="contained"
                         endIcon={<ArrowRight size={20} />}
+                        fullWidth
+                        onClick={handleStartJourney}
                         sx={{
-                          bgcolor: '#10a2e0',
+                          background: 'linear-gradient(135deg, #10a2e0 0%, #6bd3fe 100%)',
                           color: 'white',
-                          px: 4,
-                          py: 1.5,
-                          fontSize: '1.1rem',
+                          px: { xs: 3, sm: 4 },
+                          py: { xs: 1.75, sm: 1.5 },
+                          minHeight: { xs: 56, sm: 'auto' },
+                          fontSize: { xs: '1.05rem', sm: '1.1rem' },
                           fontWeight: 600,
                           borderRadius: 3,
                           textTransform: 'none',
-                          boxShadow: '0 8px 20px rgba(16, 162, 224, 0.3)',
+                          position: 'relative',
+                          overflow: 'hidden',
+                          border: '2px solid rgba(255, 255, 255, 0.2)',
+                          boxShadow: '0 8px 24px rgba(16, 162, 224, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
+                          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                          '&::before': {
+                            content: '""',
+                            position: 'absolute',
+                            top: 0,
+                            left: '-100%',
+                            width: '100%',
+                            height: '100%',
+                            background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent)',
+                            transition: 'left 0.6s ease',
+                          },
                           '&:hover': {
-                            bgcolor: '#0d608e',
-                            boxShadow: '0 12px 30px rgba(16, 162, 224, 0.4)',
+                            background: 'linear-gradient(135deg, #0d608e 0%, #10a2e0 100%)',
+                            boxShadow: '0 12px 32px rgba(16, 162, 224, 0.6)',
+                            borderColor: 'rgba(255, 255, 255, 0.3)',
+                            '&::before': {
+                              left: '100%',
+                            },
+                          },
+                          '&:active': {
+                            boxShadow: '0 4px 12px rgba(16, 162, 224, 0.4)',
                           },
                         }}
                       >
@@ -174,24 +219,53 @@ const Hero = () => {
                       </Button>
                     </motion.div>
                     <motion.div
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.98 }}
+                      whileHover={{ scale: 1.03, y: -2 }}
+                      whileTap={{ scale: 0.97 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                      style={{ width: '100%' }}
                     >
                       <Button
                         variant="outlined"
+                        fullWidth
+                        onClick={handleLearnMore}
                         sx={{
                           borderColor: '#10a2e0',
                           color: '#10a2e0',
-                          px: 4,
-                          py: 1.5,
-                          fontSize: '1.1rem',
+                          px: { xs: 3, sm: 4 },
+                          py: { xs: 1.75, sm: 1.5 },
+                          minHeight: { xs: 56, sm: 'auto' },
+                          fontSize: { xs: '1.05rem', sm: '1.1rem' },
                           fontWeight: 600,
                           borderRadius: 3,
+                          borderWidth: 2,
                           textTransform: 'none',
+                          position: 'relative',
+                          overflow: 'hidden',
+                          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                          '&::before': {
+                            content: '""',
+                            position: 'absolute',
+                            top: '50%',
+                            left: '50%',
+                            width: 0,
+                            height: 0,
+                            borderRadius: '50%',
+                            background: 'radial-gradient(circle, rgba(107, 211, 254, 0.2), transparent 70%)',
+                            transform: 'translate(-50%, -50%)',
+                            transition: 'width 0.5s ease, height 0.5s ease',
+                          },
                           '&:hover': {
                             borderWidth: 2,
-                            borderColor: '#0d608e',
-                            bgcolor: 'rgba(16, 162, 224, 0.05)',
+                            borderColor: '#10a2e0',
+                            bgcolor: 'rgba(16, 162, 224, 0.08)',
+                            boxShadow: '0 4px 20px rgba(16, 162, 224, 0.3)',
+                            '&::before': {
+                              width: '300px',
+                              height: '300px',
+                            },
+                          },
+                          '&:active': {
+                            boxShadow: '0 2px 10px rgba(16, 162, 224, 0.3)',
                           },
                         }}
                       >
@@ -233,9 +307,10 @@ const Hero = () => {
                   <Box
                     sx={{
                       position: 'relative',
-                      display: 'flex',
+                      display: { xs: 'none', sm: 'flex' },
                       justifyContent: 'center',
                       alignItems: 'center',
+                      mt: { sm: 4, md: 0 }
                     }}
                   >
                     {/* Floating Cards */}
@@ -253,8 +328,8 @@ const Hero = () => {
                     >
                       <Box
                         sx={{
-                          width: { xs: 280, md: 350 },
-                          height: { xs: 350, md: 420 },
+                          width: { sm: 280, md: 350 },
+                          height: { sm: 350, md: 420 },
                           bgcolor: 'white',
                           borderRadius: 4,
                           boxShadow: '0 20px 60px rgba(16, 162, 224, 0.2)',
@@ -428,33 +503,71 @@ const Hero = () => {
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <Grid container spacing={3} sx={{ mt: 3 }}>
+            <Grid container spacing={{ xs: 2, sm: 2.5, md: 3 }} sx={{ mt: { xs: 2, md: 3 } }}>
               {stats.map((stat, index) => (
                 <Grid item xs={6} md={3} key={index}>
                   <motion.div
-                    whileHover={{ scale: 1.05, y: -5 }}
-                    transition={{ duration: 0.3 }}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    whileHover={{ scale: 1.05, y: -8 }}
+                    whileTap={{ scale: 0.97 }}
                   >
                     <Box
                       sx={{
                         bgcolor: 'white',
-                        borderRadius: 3,
-                        p: 3,
+                        borderRadius: { xs: 2.5, md: 3 },
+                        p: { xs: 2, sm: 2.5, md: 3 },
                         textAlign: 'center',
+                        position: 'relative',
+                        overflow: 'hidden',
                         boxShadow: '0 4px 20px rgba(16, 162, 224, 0.08)',
                         border: '1px solid rgba(16, 162, 224, 0.1)',
-                        transition: 'all 0.3s ease',
+                        transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                        minHeight: { xs: 140, sm: 160, md: 'auto' },
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        '&::before': {
+                          content: '""',
+                          position: 'absolute',
+                          top: 0,
+                          left: '-100%',
+                          width: '100%',
+                          height: '100%',
+                          background: 'linear-gradient(90deg, transparent, rgba(107, 211, 254, 0.1), transparent)',
+                          transition: 'left 0.6s ease',
+                        },
+                        '&::after': {
+                          content: '""',
+                          position: 'absolute',
+                          top: 0,
+                          left: 0,
+                          right: 0,
+                          height: '3px',
+                          background: 'linear-gradient(90deg, #10a2e0 0%, #6bd3fe 100%)',
+                          transform: 'scaleX(0)',
+                          transition: 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                        },
                         '&:hover': {
-                          boxShadow: '0 8px 30px rgba(16, 162, 224, 0.15)',
-                          borderColor: 'rgba(16, 162, 224, 0.3)',
+                          boxShadow: '0 12px 40px rgba(16, 162, 224, 0.2)',
+                          borderColor: 'rgba(16, 162, 224, 0.4)',
+                          bgcolor: 'rgba(240, 249, 255, 0.8)',
+                          '&::before': {
+                            left: '100%',
+                          },
+                          '&::after': {
+                            transform: 'scaleX(1)',
+                          },
                         },
                       }}
                     >
-                      <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
+                      <Box sx={{ display: 'flex', justifyContent: 'center', mb: { xs: 1.5, md: 2 } }}>
                         <Box
                           sx={{
-                            width: 50,
-                            height: 50,
+                            width: { xs: 44, sm: 48, md: 50 },
+                            height: { xs: 44, sm: 48, md: 50 },
                             borderRadius: '50%',
                             bgcolor: 'rgba(16, 162, 224, 0.1)',
                             display: 'flex',
@@ -468,9 +581,10 @@ const Hero = () => {
                       <Typography
                         variant="h4"
                         sx={{
+                          fontSize: { xs: '1.5rem', sm: '1.75rem', md: '2rem' },
                           fontWeight: 700,
                           color: '#0a4168',
-                          mb: 1,
+                          mb: { xs: 0.5, md: 1 },
                         }}
                       >
                         {stat.value}
@@ -478,8 +592,10 @@ const Hero = () => {
                       <Typography
                         variant="body2"
                         sx={{
+                          fontSize: { xs: '0.8rem', sm: '0.85rem', md: '0.875rem' },
                           color: '#64748b',
                           fontWeight: 500,
+                          lineHeight: 1.3,
                         }}
                       >
                         {stat.label}
