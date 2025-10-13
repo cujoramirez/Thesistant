@@ -1,12 +1,25 @@
 import { Box, Container, Typography, Grid, Card, CardContent, Button, Chip } from '@mui/material';
 import { motion } from 'framer-motion';
 import { Check, Star, Zap, Crown, ArrowRight, Users, Clock, FileText } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const Pricing = () => {
+  const navigate = useNavigate();
+
   const handleContactUs = () => {
+    // First check if contact section exists on current page
     const contactSection = document.querySelector('#contact');
     if (contactSection) {
       contactSection.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      // Navigate to home page and then scroll to contact
+      navigate('/');
+      setTimeout(() => {
+        const contactSection = document.querySelector('#contact');
+        if (contactSection) {
+          contactSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
     }
   };
 

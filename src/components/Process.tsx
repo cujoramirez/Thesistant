@@ -138,17 +138,19 @@ const Process = () => {
 
         {/* Timeline */}
         <Box sx={{ position: 'relative' }}>
-          {/* Vertical connecting line for mobile */}
+          {/* Vertical connecting line - positioned behind icons */}
           <Box
             sx={{
-              display: { xs: 'block', md: 'none' },
+              display: 'block',
               position: 'absolute',
-              left: { xs: 28, sm: 32 },
-              top: 80,
-              bottom: 80,
+              left: { xs: 28, sm: 32, md: '50%' },
+              transform: { md: 'translateX(-50%)' },
+              top: 0,
+              bottom: 0,
               width: 3,
               background: 'linear-gradient(180deg, rgba(16, 162, 224, 0.3) 0%, rgba(16, 162, 224, 0.1) 100%)',
               borderRadius: 2,
+              zIndex: 0,
             }}
           />
 
@@ -327,9 +329,11 @@ const Process = () => {
                     whileHover={{ 
                       scale: 1.2, 
                       rotate: [0, -10, 10, -10, 0],
-                      boxShadow: '0 12px 40px rgba(16, 162, 224, 0.5)'
                     }}
                     whileTap={{ scale: 0.9 }}
+                    style={{
+                      borderRadius: '50%',
+                    }}
                   >
                     <Box
                       sx={{
@@ -357,6 +361,9 @@ const Process = () => {
                           transition: 'opacity 0.3s ease',
                           animation: 'pulse 2s infinite',
                         },
+                        '&:hover': {
+                          boxShadow: '0 12px 40px rgba(16, 162, 224, 0.5), inset 0 2px 8px rgba(255, 255, 255, 0.2)',
+                        },
                         '&:hover::before': {
                           opacity: 0.5,
                         },
@@ -373,39 +380,6 @@ const Process = () => {
 
                 {/* Spacer for desktop */}
                 <Box sx={{ display: { xs: 'none', md: 'block' }, flex: '0 0 45%' }} />
-
-                {/* Connecting arrow for desktop */}
-                {index < steps.length - 1 && (
-                  <Box
-                    sx={{
-                      display: { xs: 'none', md: 'block' },
-                      position: 'absolute',
-                      top: '100%',
-                      left: '50%',
-                      transform: 'translateX(-50%)',
-                    }}
-                  >
-                    <motion.div
-                      animate={{
-                        y: [0, 10, 0],
-                      }}
-                      transition={{
-                        duration: 2,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                      }}
-                    >
-                      <ArrowRight
-                        size={32}
-                        style={{
-                          color: '#10a2e0',
-                          opacity: 0.5,
-                          transform: 'rotate(90deg)',
-                        }}
-                      />
-                    </motion.div>
-                  </Box>
-                )}
               </Box>
             </motion.div>
           ))}
