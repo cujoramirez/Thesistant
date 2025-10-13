@@ -183,6 +183,7 @@ const About = () => {
                 size="large"
                 sx={{
                   bgcolor: '#10a2e0',
+                  color: 'white',
                   width: { xs: '100%', sm: 'auto' },
                   px: { xs: 4, sm: 5 },
                   py: { xs: 2, sm: 2 },
